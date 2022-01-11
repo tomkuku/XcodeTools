@@ -22,6 +22,14 @@ while getopts ":puc" option ; do
   esac
 done
 
-echo "should_install_pods: $should_install_pods"
-echo "should_update_repo: $should_update_repo"
-echo "should_clear_derived_data: $should_clear_derived_data"
+podfile_path=`find . -type f -name "Podfile" -exec dirname {} \; | grep -v "Pods"`
+
+if [ "$(find . -type f -name "Podfile" | grep -v "Pods" | wc -l | awk '{print $1}')" -gt 1 ] ; then
+  echo -e "\e[31mIn this directory is more then 1 Podfile!\e[0m"
+  exit 1
+fi
+
+if [ -z "$podfile_path" ] ; then
+  echo -e "\e[31mPodfile can not be found!\e[0m"
+  exit 1
+fi
