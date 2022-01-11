@@ -33,3 +33,9 @@ if [ -z "$podfile_path" ] ; then
   echo -e "\e[31mPodfile can not be found!\e[0m"
   exit 1
 fi
+
+is_xcode_working=`ps aux | grep "$xcode_path" | grep -v "grep" | awk '{print $2}'`
+
+if [ ! -z "$is_xcode_working" ] ; then
+  killall Xcode
+fi
