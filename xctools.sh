@@ -52,3 +52,9 @@ if [ -f "$podfilelock_path" ] ; then
   rm "$podfilelock_path"
 fi
 set +e
+
+if [ "$should_update_pods" -eq 1 ]
+  pod install --repo-update --project-directory="$podfile_path"
+elif [ "$should_install_pods" -eq 1 ] ; then
+  pod install --project-directory="$podfile_path"
+fi
