@@ -16,7 +16,7 @@ while getopts ":puc" option ; do
     should_clear_derived_data=1
     ;;
   *)
-    echo "Invalid options!"
+    echo -e "\e[31mInvalid options!\e[0m"
     exit -1
     ;;
   esac
@@ -61,8 +61,18 @@ elif [ "$should_install_pods" -eq 1 ] ; then
 fi
 
 xcode_derived_data_path="~/Library/Developer/Xcode/DerivedData"
+
 set -e
 if [ "$should_clear_derived_data" -eq 1 ] ; then
   rm -rf "$should_clear_derived_data"
 fi
 set +e
+
+workspace_path=`find . -type d -name "*.xcworkspace" | grep -v "project\|Pods"`
+
+if [ "$(echo "$workspace_path" | wc -l)" -eq 1 ] ; then
+  open -a Xcode "$workspace_path"
+else
+  echo -e "\e[33mxcworkspace can not be found!\e[0m"
+  open -a Xcode
+fi
