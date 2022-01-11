@@ -59,3 +59,10 @@ if [ "$should_update_pods" -eq 1 ] ; then
 elif [ "$should_install_pods" -eq 1 ] ; then
   pod install --project-directory="$podfile_path"
 fi
+
+xcode_derived_data_path="~/Library/Developer/Xcode/DerivedData"
+set -e
+if [ "$should_clear_derived_data" -eq 1 ] ; then
+  rm -rf "$should_clear_derived_data"
+fi
+set +e
