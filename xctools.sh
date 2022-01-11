@@ -39,3 +39,16 @@ is_xcode_working=`ps aux | grep "$xcode_path" | grep -v "grep" | awk '{print $2}
 if [ ! -z "$is_xcode_working" ] ; then
   killall Xcode
 fi
+
+pods_dir_path=`find . -type d -name "Pods"`
+podfilelock_path=`find . -type f -name "Podfile.lock" | grep -v "Pods"`
+
+set -e
+if [ -d "$pods_dir_path" ] ; then
+  rm -rf "$pods_dir_path"
+fi
+
+if [ -f "$podfilelock_path" ] ; then
+  rm "$podfilelock_path"
+fi
+set +e
