@@ -34,6 +34,7 @@ if [ -z "$podfile_path" ] ; then
   exit 1
 fi
 
+xcode_path="/Applications/Xcode.app/Contents/MacOS/Xcode"
 is_xcode_working=`ps aux | grep "$xcode_path" | grep -v "grep" | awk '{print $2}'`
 
 if [ ! -z "$is_xcode_working" ] ; then
@@ -53,7 +54,7 @@ if [ -f "$podfilelock_path" ] ; then
 fi
 set +e
 
-if [ "$should_update_pods" -eq 1 ]
+if [ "$should_update_pods" -eq 1 ] ; then
   pod install --repo-update --project-directory="$podfile_path"
 elif [ "$should_install_pods" -eq 1 ] ; then
   pod install --project-directory="$podfile_path"
